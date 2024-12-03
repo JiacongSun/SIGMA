@@ -45,8 +45,10 @@ module adder32(clk, rst, A, B, O);
     .out(adder_out)
   );
 
-  assign adder_a_in = A;
-  assign adder_b_in = B;
+  always @ (posedge clk) begin
+	  adder_a_in <= A;
+	  adder_b_in <= B;
+  end
   
   //covers corner cases and uses general adder logic
   always @ ( posedge clk ) begin

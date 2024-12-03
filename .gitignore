@@ -1,0 +1,15 @@
+
+# Pycharm settings
+.idea/
+
+# Simulation scripts
+run.tcl
+
+# Questa Sim settings
+modelsim.ini
+transcript
+work
+vsim.wlf
+
+# Others
+gen_tb/gen_matrix

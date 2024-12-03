@@ -32,6 +32,14 @@ module mult_switch(
 	
 	reg [15:0] w_A;
 	reg [15:0] w_B;
+
+	wire [15:0] w_A_pre;
+	wire [15:0] w_B_pre;
+
+	always @ (posedge clk) begin
+		w_A <= w_A_pre;
+		w_B <= w_B_pre;
+	end
 	
 	// logic to store correct value into the stationary buffer
 	always @ (posedge clk) begin
@@ -46,8 +54,8 @@ module mult_switch(
 		end
 	end
 		
-	assign w_A = (r_buffer_valid == 1'b1 && i_valid == 1'b1) ? i_data : 'd0; // streaming
-	assign w_B = (r_buffer_valid == 1'b1 && i_valid == 1'b1) ? r_buffer : 'd0; // stationary
+	assign w_A_pre = (r_buffer_valid == 1'b1 && i_valid == 1'b1) ? i_data : 'd0; // streaming
+	assign w_B_pre = (r_buffer_valid == 1'b1 && i_valid == 1'b1) ? r_buffer : 'd0; // stationary
 	
 	// logic to generate correct output valid signal
 	always @ (posedge clk) begin

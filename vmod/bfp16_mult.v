@@ -50,9 +50,11 @@ module multiplier(clk, A, B, O);
 		.b(multiplier_b_in),
 		.out(multiplier_out)
 	);
-	
-  assign multiplier_a_in = A; // timing fix - singly cycle
-  assign multiplier_b_in = B; // timing fix - single cycle
+
+  always @ (posedge clk) begin
+	  multiplier_a_in <= A; // timing fix - singly cycle
+	  multiplier_b_in <= B; // timing fix - single cycle
+  end
 
   always @ (posedge clk) begin //Multiplication
     //If a is NaN return NaN

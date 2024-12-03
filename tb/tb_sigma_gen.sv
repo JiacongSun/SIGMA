@@ -128,19 +128,19 @@ module tb_flexdpe ();
 	end
 
 
-	integer g;
-	initial begin
-		g = $fopen("out_dump.txt","w");
-		$fwrite(g, "\n------------------------------------------\n");
-		$fwrite(g, "Timestamp - Valid, - Value ");
-		$fwrite(g, "\n------------------------------------------\n");
-	end
+	// integer g;
+	// initial begin
+	// 	g = $fopen("out_dump.txt","w");
+	// 	$fwrite(g, "\n------------------------------------------\n");
+	// 	$fwrite(g, "Timestamp - Valid, - Value ");
+	// 	$fwrite(g, "\n------------------------------------------\n");
+	// end
 
 
-	always @ (posedge clk) begin
-		$fwrite(g, "------------------------------------------ \n");
-		$fwrite(g, "%d, %h, %h\n", $time, my_flexdpe.my_fan_network.o_valid[31:0], my_flexdpe.my_fan_network.o_data_bus[1023:0]);
-	end
+	// always @ (posedge clk) begin
+	// 	$fwrite(g, "------------------------------------------ \n");
+	// 	$fwrite(g, "%d, %h, %h\n", $time, my_flexdpe.my_fan_network.o_valid[31:0], my_flexdpe.my_fan_network.o_data_bus[1023:0]);
+	// end
 
 
 endmodule

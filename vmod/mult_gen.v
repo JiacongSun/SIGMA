@@ -31,6 +31,14 @@ module mult_gen # (
 	
 	reg r_valid;
 	reg r_stationary;
+
+	wire o_valid_pre;
+	wire [NUM_PES * OUT_DATA_TYPE -1 :0] o_data_bus_pre;
+
+	always @ (posedge clk) begin
+		o_valid <= o_valid_pre;
+		o_data_bus <= o_data_bus_pre;
+	end
 	
 	// FF i_valid and i_stationary for timing fix
 	always @ (posedge clk) begin
@@ -51,8 +59,8 @@ module mult_gen # (
 					.i_valid(r_valid),
 					.i_data(i_data_bus[i*IN_DATA_TYPE +: IN_DATA_TYPE]),
 					.i_stationary(r_stationary),
-					.o_valid(o_valid),
-					.o_data(o_data_bus[i*OUT_DATA_TYPE +: OUT_DATA_TYPE])
+					.o_valid(o_valid_pre),
+					.o_data(o_data_bus_pre[i*OUT_DATA_TYPE +: OUT_DATA_TYPE])
 				);
 			end else begin : without_valid
 				mult_switch my_mult_switch (
@@ -62,7 +70,7 @@ module mult_gen # (
 					.i_stationary(r_stationary),
 					.i_data(i_data_bus[i*IN_DATA_TYPE +: IN_DATA_TYPE]),
 					.o_valid(), // not needed (as mult switch 0 already determines logic)
-					.o_data(o_data_bus[i*OUT_DATA_TYPE +: OUT_DATA_TYPE])
+					.o_data(o_data_bus_pre[i*OUT_DATA_TYPE +: OUT_DATA_TYPE])
 				);
 			end
 		end

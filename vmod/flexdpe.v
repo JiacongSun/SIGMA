@@ -43,6 +43,7 @@ module flexdpe(
 	wire w_reduction_valid;
 
 	reg [NUM_PES * OUT_DATA_TYPE -1: 0] r_mult;
+	wire [NUM_PES * OUT_DATA_TYPE -1: 0] r_mult_pre;
 
 	wire [NUM_PES * IN_DATA_TYPE -1 : 0]  w_dist_bus; // output of xbar network
 	wire w_mult_valid;
@@ -62,6 +63,7 @@ module flexdpe(
 		r_stationary_ff2 <= r_stationary_ff;
 		r_dest_bus_ff <= i_dest_bus;
 		r_dest_bus_ff2 <= r_dest_bus_ff;
+		r_mult <= r_mult_pre;
 	end
 
 	// instantize controller
@@ -107,7 +109,7 @@ module flexdpe(
 		.i_data_bus(w_dist_bus),
 		.i_stationary(r_stationary_ff2),
 		.o_valid(w_mult_valid),
-		.o_data_bus(r_mult)
+		.o_data_bus(r_mult_pre)
 	);
 
 	// instantiate fan reduction topology
@@ -119,7 +121,7 @@ module flexdpe(
 		.clk(clk),
 		.rst(rst),
 		.i_valid(w_reduction_valid),
-		.i_data_bus(r_mult),
+		.i_data_bus(r_mult_pre),
 		.i_add_en_bus(w_reduction_add),
 		.i_cmd_bus(w_reduction_cmd),
 		.i_sel_bus(w_reduction_sel),
